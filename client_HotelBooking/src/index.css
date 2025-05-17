@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme{
+    --color-primary:#2563EB;
+    --color-secondary:#FBBF24
+}
+@keyframes moveUp {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+*{
+    font-family: Outfit;
+}
+
+.font-playfair{
+    font-family: Playfair !important;
+}
+
+/* Animation for scrolling elements */
+.slide-up-animation {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
