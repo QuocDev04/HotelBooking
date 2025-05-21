@@ -22,3 +22,15 @@ services:
       - /app/node_modules
     environment:
       NODE_ENV: development
+
+  server:
+    build:
+      context: ./server_HotelBooking
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./server_HotelBooking:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
