@@ -16,6 +16,7 @@
         "vite-plugin-node-polyfills": "^0.22.0"
     },
     "dependencies": {
+        "@clerk/express": "^1.4.20",
         "axios": "^1.7.4",
         "bcryptjs": "^2.4.3",
         "cloudinary": "^2.6.1",
