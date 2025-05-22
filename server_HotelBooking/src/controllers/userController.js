@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes"
-import UserSchema from "../models/user_id"
+import UserSchema from "../models/userModels.js"
 
 
 

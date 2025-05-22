@@ -3,9 +3,9 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import mongoose from "mongoose";
-import connectDB from "./config/mongodb";
-import router from "./routers/user_id";
-import AdminRouter from "./routers/adminRouter";
+import connectDB from "./config/mongodb.js";
+import router from "./routers/userRouter.js";
+import AdminRouter from "./routers/adminRouter.js";
 
 const app = express();
 app.use(express.json());

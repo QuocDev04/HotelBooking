@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes"
-import AdminSchema from "../models/adminModels"
+import AdminSchema from "../models/adminModels.js"
 
 
 
