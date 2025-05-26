@@ -1,21 +1,21 @@
 import express from 'express'
 import "dotenv/config"
-import cors from 'cors';
-import morgan from "morgan";
+import cors from "cors"
+import connectDB from './src/config/mongodb.js'
 import { clerkMiddleware } from '@clerk/express'
-import connectDB from './src/config/mongodb.js';
-import clerkWebhook from './src/controllers/userController.js';
+import clerkWebhooks from './src/controllers/clerkWebhooks.js'
 
-const app = express()
-app.use(express.json());
-app.use(cors());
-app.use(morgan("tiny"));
-app.use(clerkMiddleware());
 connectDB();
 
-app.use("/api/clerk", clerkWebhook);
+const app = express()
+app.use(cors())
 
-app.get('/', (req,res)=> res.send("API is working line"))
+app.use(express.json())
+app.use(clerkMiddleware())
+
+app.use("/api/clerk",clerkWebhooks)
+
+app.get('/', (req,res)=> res.send("API is working"))
 
 const PORT = process.env.PORT || 8080;
 
