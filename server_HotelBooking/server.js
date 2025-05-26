@@ -11,7 +11,8 @@ const app = express()
 app.use(cors())
 
 // ✅ Route webhook phải dùng raw body và đặt TRƯỚC express.json()
-app.post("/api/clerk", express.raw({ type: "application/json" }), clerkWebhooks)
+import { raw } from "express";
+app.post("/api/clerk", raw({ type: "application/json" }), clerkWebhooks);
 // ✅ Sau đó mới dùng express.json() cho các route khác
 app.use(express.json())
 app.use(clerkMiddleware())
