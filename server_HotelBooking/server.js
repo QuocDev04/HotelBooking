@@ -10,13 +10,14 @@ connectDB();
 const app = express()
 app.use(cors())
 
+// ✅ Route webhook phải dùng raw body và đặt TRƯỚC express.json()
+app.post("/api/clerk", express.raw({ type: "application/json" }), clerkWebhooks)
+
+// ✅ Sau đó mới dùng express.json() cho các route khác
 app.use(express.json())
 app.use(clerkMiddleware())
 
-app.use("/api/clerk",clerkWebhooks)
-
-app.get('/', (req,res)=> res.send("API is working"))
+app.get('/', (req, res) => res.send("API is working"))
 
 const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
