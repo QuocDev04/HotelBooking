@@ -1,10 +1,9 @@
 import User from "../models/userModels.js";
 import { Webhook } from "svix";
 
-
 const clerkWebhooks = async (req, res) => {
     try {
-        const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
+        const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
         const headers = {
             "svix-id": req.headers["svix-id"],
@@ -12,38 +11,40 @@ const clerkWebhooks = async (req, res) => {
             "svix-signature": req.headers["svix-signature"],
         };
 
-        await whook.verify(JSON.stringify(req.body), headers);
-
-        const { data, type } = req.body
-        const userData = {
-            _id: data.id,
-            email: data.email.addresses[0].email.address,
-            username: data.first_name + " " + data.last_name,
-            image: data.image_url,
+        if (!headers["svix-id"] || !headers["svix-timestamp"] || !headers["svix-signature"]) {
+            return res.status(400).json({ success: false, message: "Missing required headers" });
         }
 
+        const payload = req.body.toString("utf8");
+        const evt = whook.verify(payload, headers);
+
+        const { data, type } = evt;
+        const userData = {
+            _id: data.id,
+            email: data.email_addresses?.[0]?.email_address,
+            username: `${data.first_name ?? ""} ${data.last_name ?? ""}`.trim(),
+            image: data.image_url,
+        };
+
         switch (type) {
-            case "user.created": {
+            case "user.created":
                 await User.create(userData);
                 break;
-            }
-            case "user.updated": {
+            case "user.updated":
                 await User.findByIdAndUpdate(data.id, userData);
                 break;
-            }
-            case "user.deleted": {
+            case "user.deleted":
                 await User.findByIdAndDelete(data.id);
                 break;
-            }
-
             default:
                 break;
         }
-        res.json({ success: true, message: "Webhook Recieved" })
-    } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message })
 
+        res.json({ success: true, message: "Webhook received" });
+    } catch (error) {
+        console.error("Webhook error:", error.message);
+        res.status(400).json({ success: false, message: error.message });
     }
-}
+};
+
 export default clerkWebhooks;
