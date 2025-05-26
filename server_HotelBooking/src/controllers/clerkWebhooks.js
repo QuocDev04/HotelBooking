@@ -21,9 +21,10 @@ const clerkWebhooks = async (req, res) => {
         const { data, type } = evt;
         const userData = {
             _id: data.id,
-            email: data.email_addresses?.[0]?.email_address,
-            username: `${data.first_name ?? ""} ${data.last_name ?? ""}`.trim(),
+            email: data.email_addresses[0].email_address,
+            userName: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
             image: data.image_url,
+            recentSearchedCities: [], // ✅ Truyền mảng rỗng ban đầu
         };
 
         switch (type) {
