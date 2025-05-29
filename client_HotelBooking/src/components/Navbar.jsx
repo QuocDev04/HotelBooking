@@ -11,12 +11,7 @@ const BooIcon = ()=>(
     </svg>
 )
 const Navbar = () => {
-    const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Hotels', path: '/rooms' },
-        { name: 'Experience', path: '/' },
-        { name: 'About', path: '/' },
-    ];
+  
 
 
     const [isScrolled, setIsScrolled] = useState(false);
@@ -53,14 +48,20 @@ const Navbar = () => {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-4 lg:gap-8">
-                {navLinks.map((link, i) => (
-                    <a key={i} href={link.path} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>
-                        {link.name}
+                    <Link to={'/'}  className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>Home
                         <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
-                    </a>
-                ))}
-
+                    </Link>
+                <Link to={'/room'} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>Hotel
+                    <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
+                </Link>
+                <Link to={'/'} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>Contact
+                    <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
+                </Link>
+                <Link to={'/'} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>About
+                    <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
+                </Link>
             </div>
+            
 
             {/* Desktop Right */}
             <div className="hidden md:flex items-center gap-4">
@@ -100,12 +101,12 @@ const Navbar = () => {
                 <button className="absolute top-4 right-4" onClick={() => setIsMenuOpen(false)}>
                     <img src={assets.closeIcon} alt="" className="h-6.5" />
                 </button>
-
+{/* 
                 {navLinks.map((link, i) => (
                     <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
                         {link.name}
                     </a>
-                ))}
+                ))} */}
 
                { !user && <button onClick={openSignIn} className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
                     Login

@@ -17,7 +17,7 @@ const App = () => {
       <div className='min-h-[70vh]'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/rooms' element={<AllRooms />} />
+          <Route path='/room' element={<AllRooms />} />
           <Route path='/rooms/:id' element={<RoomDetail />} />
           <Route path='/my-bookings' element={<MyBooking />} />
         </Routes>
