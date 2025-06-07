@@ -8,7 +8,7 @@ const Dashboard = () => {
 
     return (
         <div>
-            <Title align={'left'} font={'outfit'} title={'Dashboard'} />
+            <Title align={'left'} font={'outfit'} title={'Hệ Thống'} />
             <div className='flex gap-4 my-8'>
                 <div className='bg-blue-50 border border-blue-900 rounded flex p-4 pr-8'>
                     <img src={assets.totalBookingIcon} alt="" className='max-sm:hidden h-10' />

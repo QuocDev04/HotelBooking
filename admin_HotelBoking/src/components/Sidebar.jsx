@@ -16,7 +16,7 @@ const Sidebar = () => {
 
     const sidebarLinks = [
         {
-            name: 'Dashboard',
+            name: 'Hệ Thống',
             path: '/',
             icon: assets.dashboardIcon,
         },
@@ -29,11 +29,19 @@ const Sidebar = () => {
             ],
         },
         {
-            name: 'Room',
+            name: 'Phòng',
             icon: assets.listIcon,
             children: [
                 { name: 'List Room', path: '/list-room', icon: assets.addIcon },
                 { name: 'Add Room', path: '/add-room', icon: assets.listIcon },
+            ],
+        },
+        {
+            name: 'Khách Sạn',
+            icon: assets.listIcon,
+            children: [
+                { name: 'List Hotel', path: '/list-hotel', icon: assets.addIcon },
+                { name: 'Add Hotel', path: '/add-hotel', icon: assets.listIcon },
             ],
         },
     ];

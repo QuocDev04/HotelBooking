@@ -3,7 +3,18 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+// Cấu hình QueryClient với tùy chọn tự động gọi lại dữ liệu
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,   // Tự động gọi lại khi cửa sổ được focus
+      refetchOnReconnect: true,     // Tự động gọi lại khi kết nối mạng được khôi phục
+      staleTime: 0,                 // Dữ liệu sẽ được coi là "stale" ngay lập tức để luôn gọi lại
+    },
+  },
+});
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 if (!PUBLISHABLE_KEY) {
@@ -12,9 +23,11 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')).render(
 
   <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
 </ClerkProvider>
    
 

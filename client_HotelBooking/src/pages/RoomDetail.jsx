@@ -2,20 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { assets, facilityIcons, roomCommonData, roomsDummyData } from './../assets/assets';
 import StarRating from './../components/StarRating';
+import { useQuery } from '@tanstack/react-query';
+import instance from '../../configs/axios';
 const RoomDetail = () => {
     const { id } = useParams();
-    const [room, setRoom] = useState(null);
     const [mainImage, setMainImage] = useState(null);
-
-    useEffect(() => {
-        const room = roomsDummyData.find(room => room._id === id)
-        room && setRoom(room)
-        room && setMainImage(room.images[0])
-    }, [])
+    const {data} = useQuery({
+        queryKey:['room',id],
+        queryFn:()=> instance.get(`/room/${id}`)
+    })
+    const room = data?.data?.rooms || []
+    console.log(room);
+    
+    // useEffect(() => {
+    //     const room = roomsDummyData.find(room => room._id === id)
+    //     room && setRoom(room)
+    //     room && setMainImage(room.images[0])
+    // }, [])
     return room && (
         <div className='py-28 md:py-36 px-4 md:px-16 lg:px-24 xl:px-32'>
             <div className='flex flex-col md:flex-row items-start md:items-center gap-2'>
-                <h1 className='text-3xl md:text-4xl font-playfair'>{room.hotel.name}
+                <h1 className='text-3xl md:text-4xl font-playfair'>{room.roomName}
                     <span className='font-inter text-sm'>{room.roomType}</span> </h1>
                 <p className='text-xs font-inter py-1.5 px-3 text-white bg-orange-500 rounded-full'>20% OFF</p>
             </div>
@@ -28,10 +35,10 @@ const RoomDetail = () => {
 
             <div className='flex items-center gap-1 text-gray-500 mt-2'>
                 <img src={assets.locationIcon} alt="" />
-                <span>{room.hotel.address}</span>
+                {/* <span>{room.data.address}</span> */}
             </div>
 
-            <div className='flex flex-col lg:flex-row mt-6 gap-6'>
+            {/* <div className='flex flex-col lg:flex-row mt-6 gap-6'>
                 <div className='lg:w-1/2 w-full'>
                     <img src={mainImage} className='w-full rounded-xl shadow-lg object-cover' alt="" />
                 </div>
@@ -47,7 +54,7 @@ const RoomDetail = () => {
                         />
                     ))}
                 </div>
-            </div>
+            </div> */}
 
 
             <div className='flex flex-col md:flex-row md:justify-between mt-10'>
@@ -55,14 +62,14 @@ const RoomDetail = () => {
                     <h1 className='text-3xl md:text-4xl font-playfair'>
                         Experience Luxury Like Never Before
                     </h1>
-                    <div className='flex flex-wrap items-center mt-3 mb-6 gap-4'>
+                    {/* <div className='flex flex-wrap items-center mt-3 mb-6 gap-4'>
                         {room.amenities.map((item, index) => (
                             <div key={index} className='flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100'>
                                 <img src={facilityIcons[item]} alt={item} className='w-5 h-5' />
                                 <p className='text-xs'>{item}</p>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
                 <p className='text-2xl font-medium'>${room.pricePerNight}/night</p>
             </div>
@@ -89,7 +96,7 @@ const RoomDetail = () => {
                     Check Availability
                 </button>
             </form>
-            <div className='mt-24 space-y-4'>
+            {/* <div className='mt-24 space-y-4'>
                 {roomCommonData.map((spec, index)=>(
                     <div key={index} className='flex items-start gap-2'>
 
@@ -100,11 +107,11 @@ const RoomDetail = () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> */}
             <div className='max-w-3xl border-y border-gray-300 my-16 py-10 text-gray-500'>
                 <p>Guests will be allocated on the ground floor according to availability. You get a comfortable Two bedroom apartment has a true city feeling. The price quoted is for two guest, at the guest slot please mark the number of guests to get the exact price for groups. The Guests will be allocated ground floor according to availability. You get the comfortable two bedroom apartment that has a true city feeling.</p>
             </div>
-             <div className='flex flex-col items-start gap-4'>
+             {/* <div className='flex flex-col items-start gap-4'>
                 <div className='flex gap-4'>
                     <img src={room.hotel.owner.image} alt="Host" className='h-14 w-14 md:h-18 md:w-18 rounded-full' />
                     <div>
@@ -118,7 +125,7 @@ const RoomDetail = () => {
                 <button className='px-6 py-2.5 mt-4 rounded text-white bg-blue-700 hover:bg-blue-900 transition-all cursor-pointer'>
                     Contact Now
                 </button>
-             </div>
+             </div> */}
         </div>
     )
 }

@@ -21,8 +21,8 @@ app.use(clerkMiddleware())
 
 app.get('/', (req, res) => res.send("API is working"))
 app.use('/api/user', router)
-app.use('/api/hotels', hotelRouter)
-app.use('/api/rooms', roomRouter)
+app.use('/api/', hotelRouter)
+app.use('/api/', roomRouter)
 app.use('/api/bookings', bookingRouter)
 
 

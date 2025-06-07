@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { assets, facilityIcons, roomsDummyData } from '../assets/assets'
+import { assets, facilityIcons } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import StarRating from '../components/StarRating';
+import { useQuery } from '@tanstack/react-query';
+import instance from '../../configs/axios';
 
 const CheckBox = ({label,selected = false,onChange = ()=> {}})=>{
     return (
@@ -20,6 +22,12 @@ const RadioButton = ({ label, selected = false, onChange = () => { } }) => {
     )
 }
 const AllRooms = () => {
+    const {data} = useQuery({
+        queryKey:['room'],
+        queryFn:()=> instance.get('/room')
+    })
+    const room = data?.data?.rooms || []
+
     const navigate = useNavigate();
     const [openFilters, setOpenFilters] = useState(false);
 
@@ -49,7 +57,7 @@ const AllRooms = () => {
                         and special packages to enhance your stay and create unforgettable memories.</p>
                 </div>
 
-                {roomsDummyData.map((room) => (
+                {room.map((room) => (
                     <div key={room._id} className='flex flex-col md:flex-row items-start py-10 gap-6 border-b border-gray-300 last:pb-30 last:border-0'>
                         <img src={room.images[0]} alt="" title='View Room Details' onClick={() => { navigate(`/rooms/${room._id}`); scrollTo(0, 0) }}
                             className='max-h-64 md:w-1/2 rounded-xl shadow-lg object-cover cursor-pointer' />

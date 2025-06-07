@@ -1,11 +1,11 @@
 import React from 'react'
 
-const ListRoom = () => {
+const ListTour = () => {
   return (
     <div>
-      
+      lss
     </div>
   )
 }
 
-export default ListRoom
+export default ListTour
